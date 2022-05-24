@@ -9,17 +9,23 @@ private const val URL_ADDRESS = "http://localhost:8080/obo_messaging/api/send"
 private const val JSON_PARAM_NAME = "json"
 private const val JSON_VALUE =
     "[{\"park\":\"park1\", \"count\":5}, {\"park\":\"park2\", \"count\":10},{\"park\":\"park3\",\"count\":333}]"
+private const val API_KEY_PARAM = "apikey"
+
 
 fun main() {
     sendGetRequest(JSON_PARAM_NAME, JSON_VALUE)
 }
 
-
-fun sendGetRequest(paramName: String, paramValue: String) {
+private fun createParameterWIthValue(paramName: String, paramValue: String): String {
     val encodedParamName = URLEncoder.encode(paramName, "UTF-8")
     val encodedParamValue = URLEncoder.encode(paramValue, "UTF-8")
     val reqParam = "$encodedParamName=$encodedParamValue"
+    return reqParam
+}
 
+fun sendGetRequest(paramName: String, paramValue: String) {
+    val firstParam = createParameterWIthValue(JSON_PARAM_NAME, JSON_VALUE)
+    val secondParam = createParameterWIthValue()
 
     val url = URL("$URL_ADDRESS?$reqParam")
 
