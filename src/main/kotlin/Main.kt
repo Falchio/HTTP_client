@@ -6,14 +6,14 @@ import java.net.URLEncoder
 
 
 private const val URL_ADDRESS = "http://localhost:8080/obo_messaging/api/send"
-private const val JSON_PARAM_NAME = "json"
+private const val JSON_PARAM_NAME = "json="
 private const val JSON_VALUE =
     "[{\"park\":\"park1\", \"count\":5}, {\"park\":\"park2\", \"count\":10},{\"park\":\"park3\",\"count\":333}]"
-private const val API_KEY_PARAM = "&apikey"
+private const val API_KEY_PARAM = "apikey"
 
 
 fun main() {
-    sendGetRequest(JSON_PARAM_NAME, JSON_VALUE)
+    sendGetRequest()
 }
 
 private fun createParameterWIthValue(paramName: String, paramValue: String): String {
@@ -23,11 +23,14 @@ private fun createParameterWIthValue(paramName: String, paramValue: String): Str
     return reqParam
 }
 
-fun sendGetRequest(paramName: String, paramValue: String) {
+fun sendGetRequest() {
     val jsonParam = createParameterWIthValue(JSON_PARAM_NAME, JSON_VALUE)
     val apiKeyParam = createParameterWIthValue(API_KEY_PARAM, ApiKey.value)
 
-    val url = URL("$URL_ADDRESS?$jsonParam$apiKeyParam")
+    println(jsonParam)
+    println(apiKeyParam)
+
+    val url = URL("$URL_ADDRESS?$apiKeyParam&$jsonParam")
 
     with(url.openConnection() as HttpURLConnection) {
         // optional default is GET
